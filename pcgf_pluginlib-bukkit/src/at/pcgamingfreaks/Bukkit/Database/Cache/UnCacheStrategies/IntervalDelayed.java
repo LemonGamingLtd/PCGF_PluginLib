@@ -21,19 +21,20 @@ import at.pcgamingfreaks.Database.Cache.ICacheablePlayer;
 import at.pcgamingfreaks.Database.Cache.IPlayerCache;
 import at.pcgamingfreaks.Database.Cache.BaseUnCacheStrategy;
 
+import me.nahu.scheduler.wrapper.FoliaWrappedJavaPlugin;
+import me.nahu.scheduler.wrapper.task.WrappedTask;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
 public class IntervalDelayed extends BaseUnCacheStrategy implements Runnable
 {
 	final long delay;
-	final int taskId;
+	final WrappedTask task;
 
-	public IntervalDelayed(final @NotNull Plugin plugin, final @NotNull IPlayerCache cache, final long delay, final long interval)
+	public IntervalDelayed(final @NotNull FoliaWrappedJavaPlugin plugin, final @NotNull IPlayerCache cache, final long delay, final long interval)
 	{
 		super(cache);
-		taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, this, delay, interval);
+		task = plugin.getScheduler().runTaskTimer(this, delay, interval);
 		this.delay = delay * 50;
 	}
 
@@ -53,6 +54,6 @@ public class IntervalDelayed extends BaseUnCacheStrategy implements Runnable
 	@Override
 	public void close()
 	{
-		Bukkit.getScheduler().cancelTask(taskId);
+		task.cancel();
 	}
 }

@@ -20,30 +20,31 @@ package at.pcgamingfreaks.Bukkit;
 import at.pcgamingfreaks.Updater.ManagedUpdaterBase;
 import at.pcgamingfreaks.Updater.UpdateProviders.UpdateProvider;
 
+import me.nahu.scheduler.wrapper.FoliaWrappedJavaPlugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.logging.Logger;
 
-public class ManagedUpdater extends ManagedUpdaterBase<Updater, JavaPlugin>
+public class ManagedUpdater extends ManagedUpdaterBase<Updater, FoliaWrappedJavaPlugin>
 {
-	public ManagedUpdater(final @NotNull JavaPlugin plugin)
+	public ManagedUpdater(final @NotNull FoliaWrappedJavaPlugin plugin)
 	{
 		this(plugin, plugin.getLogger());
 	}
 
-	public ManagedUpdater(final @NotNull JavaPlugin plugin, final @NotNull Logger logger)
+	public ManagedUpdater(final @NotNull FoliaWrappedJavaPlugin plugin, final @NotNull Logger logger)
 	{
 		this(plugin, logger, null);
 	}
 
-	public ManagedUpdater(final @NotNull JavaPlugin plugin, final @Nullable String channel)
+	public ManagedUpdater(final @NotNull FoliaWrappedJavaPlugin plugin, final @Nullable String channel)
 	{
 		this(plugin, plugin.getLogger(), channel);
 	}
 
-	public ManagedUpdater(final @NotNull JavaPlugin plugin, final @NotNull Logger logger, final @Nullable String channel)
+	public ManagedUpdater(final @NotNull FoliaWrappedJavaPlugin plugin, final @NotNull Logger logger, final @Nullable String channel)
 	{
 		super(plugin, logger, channel);
 	}

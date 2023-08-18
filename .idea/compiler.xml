@@ -14,6 +14,7 @@
         <module name="pcgf_pluginlib-reflection-obc" />
         <module name="pcgf_pluginlib-version" />
         <module name="pcgf_pluginlib-version_detection" />
+        <module name="pcgf_pluginlib-platform-nms-1_17_R1 (2)" />
         <module name="pcgf_pluginlib-platform-nms-1_19_R3" />
         <module name="pcgf_pluginlib-plugin-bukkit" />
         <module name="pcgf_pluginlib-platform-nms-1_17_R1" />
@@ -31,6 +32,7 @@
         <module name="IMessage" />
         <module name="PluginLib" />
         <module name="pcgf_pluginlib-plugin" />
+        <module name="pcgf_pluginlib-platform-nms-1_17_R1 (1)" />
         <module name="pcgf_pluginlib-platform-nms-1_18_R1" />
         <module name="pcgf_pluginlib-reflection" />
         <module name="pcgf_pluginlib-platform-nms-1_18_R2" />
@@ -47,7 +49,6 @@
       <module name="PCGF_PluginLib" target="1.8" />
       <module name="pcgf_pluginlib-nms" target="1.8" />
       <module name="pcgf_pluginlib-nms-reflection" target="1.8" />
-      <module name="PluginLib" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

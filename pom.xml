@@ -7,7 +7,7 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<revision>1.0.39.1-SNAPSHOT</revision>
+		<revision>1.0.39.2-SNAPSHOT</revision>
 		<website>https://github.com/GeorgH93/PCGF_PluginLib/</website>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -63,6 +63,10 @@
             <id>apache-snapshots</id>
             <url>https://repository.apache.org/content/repositories/snapshots/</url>
         </repository>
+		<repository>
+			<id>lemongaming-repo</id>
+			<url>https://repo.lemongaming.ltd/repository/maven-public/</url>
+		</repository>
 	</repositories>
 
 	<dependencies>
@@ -299,13 +303,13 @@
 	</profiles>
 
 	<distributionManagement>
-		<repository>
-			<id>releases</id>
-			<url>https://repo.pcgamingfreaks.at/repository/maven-releases/</url>
-		</repository>
 		<snapshotRepository>
-			<id>snapshots</id>
-			<url>https://repo.pcgamingfreaks.at/repository/maven-snapshots/</url>
+			<id>lemongaming-repo</id>
+			<url>https://repo.lemongaming.ltd/repository/maven-snapshots/</url>
 		</snapshotRepository>
+		<repository>
+			<id>lemongaming-repo</id>
+			<url>https://repo.lemongaming.ltd/repository/maven-releases/</url>
+		</repository>
 	</distributionManagement>
 </project>

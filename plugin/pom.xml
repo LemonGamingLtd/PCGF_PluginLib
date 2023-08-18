@@ -162,6 +162,7 @@
 									<include>com.google.code.gson:gson</include> <!-- Not included in Bukkit, we need it (a lot)! -->
 									<include>com.zaxxer:HikariCP</include>
 									<include>org.slf4j:*</include>
+									<include>me.nahu.*</include>
 								</includes>
 							</artifactSet>
 							<relocations>
@@ -172,6 +173,10 @@
 								<relocation>
 									<pattern>com.zaxxer</pattern>
 									<shadedPattern>at.pcgf.libs.com.zaxxer</shadedPattern>
+								</relocation>
+								<relocation>
+									<pattern>me.nahu</pattern>
+									<shadedPattern>at.pcgf.libs.me.nahu</shadedPattern>
 								</relocation>
 							</relocations>
 							<filters>

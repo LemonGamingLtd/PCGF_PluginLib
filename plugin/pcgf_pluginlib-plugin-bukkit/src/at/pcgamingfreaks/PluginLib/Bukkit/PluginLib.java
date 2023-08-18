@@ -36,6 +36,7 @@ import at.pcgamingfreaks.Util.StringUtils;
 import at.pcgamingfreaks.Updater.UpdateResponseCallback;
 import at.pcgamingfreaks.Version;
 
+import me.nahu.scheduler.wrapper.FoliaWrappedJavaPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -48,7 +49,7 @@ import lombok.Setter;
 import java.io.File;
 import java.util.logging.Level;
 
-public final class PluginLib extends JavaPlugin implements PluginLibrary, IPlugin
+public final class PluginLib extends FoliaWrappedJavaPlugin implements PluginLibrary, IPlugin
 {
 	@Getter @Setter(AccessLevel.PRIVATE) private static PluginLibrary instance = null;
 

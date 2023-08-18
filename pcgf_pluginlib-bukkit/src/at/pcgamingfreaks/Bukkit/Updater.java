@@ -20,6 +20,7 @@ package at.pcgamingfreaks.Bukkit;
 import at.pcgamingfreaks.Bukkit.Util.Utils;
 import at.pcgamingfreaks.Updater.UpdateProviders.UpdateProvider;
 
+import me.nahu.scheduler.wrapper.FoliaWrappedJavaPlugin;
 import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -33,7 +34,7 @@ import java.util.logging.Level;
 
 public class Updater extends at.pcgamingfreaks.Updater.Updater
 {
-	private final Plugin plugin;
+	private final FoliaWrappedJavaPlugin plugin;
 	private Thread thread;
 
 	/**
@@ -45,7 +46,7 @@ public class Updater extends at.pcgamingfreaks.Updater.Updater
 	 */
 	@Deprecated
 	@ApiStatus.ScheduledForRemoval(inVersion = "1.0.40")
-	public Updater(JavaPlugin plugin, File file, boolean announceDownloadProgress, UpdateProvider updateProvider)
+	public Updater(FoliaWrappedJavaPlugin plugin, File file, boolean announceDownloadProgress, UpdateProvider updateProvider)
 	{
 		this(plugin, file, announceDownloadProgress, false, updateProvider);
 	}
@@ -60,7 +61,7 @@ public class Updater extends at.pcgamingfreaks.Updater.Updater
 	 */
 	@Deprecated
 	@ApiStatus.ScheduledForRemoval(inVersion = "1.0.40")
-	public Updater(JavaPlugin plugin, File file, boolean announceDownloadProgress, boolean downloadDependencies, UpdateProvider updateProvider)
+	public Updater(FoliaWrappedJavaPlugin plugin, File file, boolean announceDownloadProgress, boolean downloadDependencies, UpdateProvider updateProvider)
 	{
 		super(plugin.getDataFolder().getParentFile(), Bukkit.getUpdateFolderFile(), announceDownloadProgress, downloadDependencies, plugin.getLogger(), updateProvider, plugin.getDescription().getVersion(), file.getName());
 		this.plugin = plugin;
@@ -71,7 +72,7 @@ public class Updater extends at.pcgamingfreaks.Updater.Updater
 	 * @param announceDownloadProgress If set to true the download progress will be logged in the console.
 	 * @param updateProvider The update provider that should be used.
 	 */
-	public Updater(JavaPlugin plugin, boolean announceDownloadProgress, UpdateProvider updateProvider)
+	public Updater(FoliaWrappedJavaPlugin plugin, boolean announceDownloadProgress, UpdateProvider updateProvider)
 	{
 		this(plugin, announceDownloadProgress, false, updateProvider);
 	}
@@ -82,7 +83,7 @@ public class Updater extends at.pcgamingfreaks.Updater.Updater
 	 * @param downloadDependencies If set to true dependencies will be downloaded (if provided from the update provider).
 	 * @param updateProviders The update providers that should be used.
 	 */
-	public Updater(JavaPlugin plugin, boolean announceDownloadProgress, boolean downloadDependencies, UpdateProvider... updateProviders)
+	public Updater(FoliaWrappedJavaPlugin plugin, boolean announceDownloadProgress, boolean downloadDependencies, UpdateProvider... updateProviders)
 	{
 		super(plugin.getDataFolder().getParentFile(), Bukkit.getUpdateFolderFile(), announceDownloadProgress, downloadDependencies, plugin.getLogger(), updateProviders, plugin.getDescription().getVersion(), Utils.getPluginJarFile(plugin).getName());
 		this.plugin = plugin;
@@ -91,7 +92,7 @@ public class Updater extends at.pcgamingfreaks.Updater.Updater
 	@Override
 	protected void runSync(Runnable runnable)
 	{
-		plugin.getServer().getScheduler().runTask(plugin, runnable);
+		plugin.getScheduler().runTask(runnable);
 	}
 
 	@Override

@@ -21,6 +21,8 @@ import at.pcgamingfreaks.Database.Cache.ICacheablePlayer;
 import at.pcgamingfreaks.Database.Cache.IPlayerCache;
 import at.pcgamingfreaks.Database.Cache.BaseUnCacheStrategy;
 
+import me.nahu.scheduler.wrapper.FoliaWrappedJavaPlugin;
+import me.nahu.scheduler.wrapper.runnable.WrappedRunnable;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -28,15 +30,14 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 public class OnDisconnectDelayed extends BaseUnCacheStrategy implements Listener
 {
-	private final Plugin plugin;
+	private final FoliaWrappedJavaPlugin plugin;
 	private final long delay;
 
-	public OnDisconnectDelayed(final @NotNull Plugin plugin, final @NotNull IPlayerCache cache, final long delay)
+	public OnDisconnectDelayed(final @NotNull FoliaWrappedJavaPlugin plugin, final @NotNull IPlayerCache cache, final long delay)
 	{
 		super(cache);
 		this.plugin = plugin;
@@ -50,7 +51,7 @@ public class OnDisconnectDelayed extends BaseUnCacheStrategy implements Listener
 		final ICacheablePlayer player = cache.getCachedPlayer(event.getPlayer().getUniqueId());
 		if(player != null && player.canBeUncached()) // We only uncache unmarried player.
 		{
-			new BukkitRunnable()
+			new WrappedRunnable()
 			{
 				@Override
 				public void run()

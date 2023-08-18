@@ -21,6 +21,7 @@ import at.pcgamingfreaks.Database.Cache.BaseUnCacheStrategy;
 import at.pcgamingfreaks.Database.Cache.IPlayerCache;
 import at.pcgamingfreaks.Database.Cache.IUnCacheStrategyConfig;
 
+import me.nahu.scheduler.wrapper.FoliaWrappedJavaPlugin;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -37,7 +38,7 @@ public class UnCacheStrategyMaker
 	 * @param config The config for the uncache strategy
 	 * @return The created uncache strategy
 	 */
-	public static @NotNull BaseUnCacheStrategy make(final @NotNull Plugin plugin, final @NotNull IPlayerCache cache, final @NotNull IUnCacheStrategyConfig config)
+	public static @NotNull BaseUnCacheStrategy make(final @NotNull FoliaWrappedJavaPlugin plugin, final @NotNull IPlayerCache cache, final @NotNull IUnCacheStrategyConfig config)
 	{
 		long delay = config.getUnCacheDelay() * 20L, interval = config.getUnCacheInterval() * 20L;
 		switch(config.getUnCacheStrategy())
