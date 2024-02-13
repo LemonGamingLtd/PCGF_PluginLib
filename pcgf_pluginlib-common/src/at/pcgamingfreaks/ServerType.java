@@ -1,5 +1,5 @@
 /*
- *   Copyright (C) 2022 GeorgH93
+ *   Copyright (C) 2024 GeorgH93
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -48,7 +48,8 @@ public class ServerType
 			try
 			{
 				String version  = (String) Reflection.getMethod(bukkitClass, "getVersion").invoke(null);
-				if(StringUtils.containsIgnoreCase(version, "bukkit"))
+				if (version == null) unknown = true;
+				else if(StringUtils.containsIgnoreCase(version, "bukkit"))
 				{
 					isBukkit = true;
 				}
@@ -78,6 +79,11 @@ public class ServerType
 				e.printStackTrace();
 				unknown = true;
 			}
+			catch(NullPointerException ignored)
+			{ // Fix for people that have the bukkit server interface class on their bungee install
+				bukkitClass = null;
+				bukkitComp = false;
+			}
 			if(unknown)
 			{ // Unknown server implementation, fall back to checking for existing classes
 				Class<?> spigotServerClass = Reflection.getClassSilent("org.bukkit.Server$Spigot");
@@ -92,7 +98,7 @@ public class ServerType
 				}
 			}
 		}
-		else
+		if (bukkitClass == null)
 		{ // Is not bukkit compatible server, probably a proxy
 			Class<?> bungeeProxyServerClass = Reflection.getClassSilent("net.md_5.bungee.api.ProxyServer");
 			if(bungeeProxyServerClass != null)
