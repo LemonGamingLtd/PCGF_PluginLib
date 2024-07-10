@@ -7,12 +7,12 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<revision>1.0.39.4-SNAPSHOT</revision>
+		<revision>1.0.39.7-SNAPSHOT</revision>
 		<website>https://github.com/GeorgH93/PCGF_PluginLib/</website>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<powermock.version>2.0.9</powermock.version><!-- property so that we have to change only one value to update all the powermock dependencies -->
-		<mavenShade.version>3.4.1</mavenShade.version>
+		<mavenShade.version>3.5.3</mavenShade.version>
 		<pluginName>PCGF_PluginLib</pluginName>
 		<author>GeorgH93</author>
 		<maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
@@ -80,7 +80,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.30</version>
+			<version>1.18.32</version>
 			<scope>provided</scope>
 		</dependency>
 		<!-- region test dependencies -->
@@ -120,7 +120,7 @@
 		<dependency>
 			<groupId>org.jacoco</groupId>
 			<artifactId>org.jacoco.agent</artifactId>
-			<version>0.8.7</version>
+			<version>0.8.12</version>
 			<classifier>runtime</classifier>
 			<scope>test</scope>
 		</dependency>
@@ -172,7 +172,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>${mavenShade.version}</version>
+				<version>3.6.3</version>
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
@@ -239,7 +239,7 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.7</version>
+				<version>0.8.12</version>
 				<executions>
 					<execution>
 						<id>instrument</id>
@@ -271,7 +271,9 @@
 		<module>pcgf_pluginlib-reflection</module>
 		<module>pcgf_pluginlib-reflection-obc</module>
 		<module>pcgf_pluginlib-reflection-nms</module>
+		<module>pcgf_pluginlib-base</module>
 		<module>pcgf_pluginlib-common</module>
+		<module>pcgf_pluginlib-servertype</module>
 		<module>pcgf_pluginlib-mcversion</module>
 		<module>pcgf_pluginlib-version</module>
 		<module>pcgf_pluginlib-uuid</module>
