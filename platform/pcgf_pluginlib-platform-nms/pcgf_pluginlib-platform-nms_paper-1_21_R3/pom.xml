@@ -1,12 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>pcgf_pluginlib-platform-nms-1_21_R1</artifactId>
+	<artifactId>pcgf_pluginlib-platform-nms-1_21_R3_Paper</artifactId>
 	<parent>
 		<groupId>at.pcgamingfreaks.pcgf_pluginlib.platform</groupId>
-		<artifactId>pcgf_pluginlib-platform-nms_mojang_mapped</artifactId>
+		<artifactId>pcgf_pluginlib-platform-nms</artifactId>
 		<version>${revision}</version>
-		<relativePath>../pom_mojang_mapped.xml</relativePath>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<version>${revision}</version>
 	<packaging>jar</packaging>
@@ -14,10 +14,11 @@
 	<url>${website}</url>
 
 	<properties>
-		<nmsVersion>1_21_R1</nmsVersion>
-		<mcVersion>100210000</mcVersion>
+		<nmsVersion>1_21_R3</nmsVersion>
+		<mcVersion>100210004</mcVersion>
 		<mojangMapped>true</mojangMapped>
-		<spigotVersion>1.21.1-R0.1-SNAPSHOT</spigotVersion>
+		<spigotVersion>1.21.4-R0.1-SNAPSHOT</spigotVersion>
+		<nmsExtension>_Paper</nmsExtension>
 	</properties>
 
 	<dependencies>
@@ -52,8 +53,30 @@
 				<artifactId>maven-resources-plugin</artifactId>
 			</plugin>
 			<plugin>
-				<groupId>net.md-5</groupId>
-				<artifactId>specialsource-maven-plugin</artifactId>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>${mavenShade.version}</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<artifactSet>
+								<includes>
+									<include>org.spigotmc:*</include>
+								</includes>
+							</artifactSet>
+							<relocations>
+								<relocation>
+									<pattern>org.bukkit.craftbukkit.v${nmsVersion}</pattern>
+									<shadedPattern>org.bukkit.craftbukkit</shadedPattern>
+								</relocation>
+							</relocations>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
