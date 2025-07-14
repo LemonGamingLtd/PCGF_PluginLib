@@ -50,7 +50,11 @@ import java.util.logging.Logger;
  */
 public class NBTItemStackSerializer_${nmsVersion}${nmsPatchLevel}${nmsExtension} implements ItemStackSerializer
 {
+	<#if mcVersion < 100210006>
 	private static final int DATA_VERSION = SharedConstants.getCurrentVersion().getDataVersion().getVersion();
+	<#else>
+	private static final int DATA_VERSION = SharedConstants.getCurrentVersion().dataVersion().version();
+	</#if>
 	private static final DataFixer DATA_FIXER = ((CraftServer) Bukkit.getServer()).getServer().fixerUpper;
 
 	@Setter private Logger logger = null;
@@ -88,24 +92,43 @@ public class NBTItemStackSerializer_${nmsVersion}${nmsPatchLevel}${nmsExtension}
 			try
 			{
 				CompoundTag tag = readData(data);
+				<#if mcVersion < 100210005>
 				int size = tag.getInt(KEY_SIZE), dataVersion = DATA_VERSION;
 				if (tag.contains(KEY_DATA_VERSION, CompoundTag.TAG_INT)) dataVersion = tag.getInt(KEY_DATA_VERSION);
+				<#else>
+				int size = tag.getInt(KEY_SIZE).orElseThrow(), dataVersion = tag.getIntOr(KEY_DATA_VERSION, DATA_VERSION);
+				</#if>
 				if (!tag.contains(KEY_INVENTORY)) { convertOldFormatToNew(tag, size); }
 				if (dataVersion < DATA_VERSION)
 				{ // Update data
 					tag = DataFixTypes.PLAYER.updateToCurrentVersion(DATA_FIXER, tag, dataVersion);
 				}
 				ItemStack[] its = new ItemStack[size];
+				<#if mcVersion < 100210005>
 				ListTag list = tag.getList(KEY_INVENTORY, CompoundTag.TAG_COMPOUND);
+				<#else>
+				ListTag list = tag.getList(KEY_INVENTORY).orElseThrow();
+				</#if>
 				int listSize = list.size();
 				for (int i = 0; i < listSize; i++)
 				{
 					CompoundTag itemTag = null;
 					try
 					{
+						<#if mcVersion < 100210005>
 						itemTag = list.getCompound(i);
 						byte slot = itemTag.getByte(KEY_SLOT);
+						<#else>
+						itemTag = list.getCompound(i).orElseThrow();
+						byte slot = itemTag.getByte(KEY_SLOT).orElseThrow();
+						</#if>
+						<#if mcVersion < 100210006>
 						Optional<net.minecraft.world.item.ItemStack> item = net.minecraft.world.item.ItemStack.parse(registry, itemTag);
+						<#else>
+						Optional<net.minecraft.world.item.ItemStack> item =  net.minecraft.world.item.ItemStack.CODEC.parse(registry.createSerializationContext(net.minecraft.nbt.NbtOps.INSTANCE), itemTag).resultOrPartial((s) -> {
+							logger.severe(String.format("Tried to load invalid item: '%s'", s));
+						});
+						</#if>
 						its[slot] = CraftItemStack.asBukkitCopy(item.orElse(net.minecraft.world.item.ItemStack.EMPTY));
 					}
 					catch(Exception ignored)
@@ -130,9 +153,16 @@ public class NBTItemStackSerializer_${nmsVersion}${nmsPatchLevel}${nmsExtension}
 		tag.put(KEY_INVENTORY, list);
 		for(int i = 0; i < size; i++)
 		{
-			if (tag.contains(String.valueOf(i), CompoundTag.TAG_COMPOUND))
+			String is = String.valueOf(i);
+	<#if mcVersion < 100210005>
+			if (tag.contains(is, CompoundTag.TAG_COMPOUND))
 			{
-				CompoundTag itemTag = tag.getCompound(String.valueOf(i));
+				CompoundTag itemTag = tag.getCompound(is);
+	<#else>
+			if (tag.contains(is))
+			{
+				CompoundTag itemTag = tag.getCompound(is).orElseThrow();
+	</#if>
 				itemTag.putByte(KEY_SLOT, (byte) i);
 				list.add(itemTag);
 			}
@@ -158,7 +188,13 @@ public class NBTItemStackSerializer_${nmsVersion}${nmsPatchLevel}${nmsExtension}
 					{
 						CompoundTag itemTag = new CompoundTag();
 						itemTag.putByte(KEY_SLOT, (byte) i);
+						<#if mcVersion < 100210006>
 						Tag t = CraftItemStack.asNMSCopy(itemStacks[i]).save(registry, itemTag);
+						<#else>
+						net.minecraft.world.item.ItemStack stack = CraftItemStack.asNMSCopy(itemStacks[i]);
+						Tag t = net.minecraft.world.item.ItemStack.CODEC.encode(stack, MinecraftServer.getServer().registryAccess().createSerializationContext(net.minecraft.nbt.NbtOps.INSTANCE), itemTag).getOrThrow();
+						</#if>
+
 						list.addTag(++used, t);
 					}
 					catch (Exception ignored)
