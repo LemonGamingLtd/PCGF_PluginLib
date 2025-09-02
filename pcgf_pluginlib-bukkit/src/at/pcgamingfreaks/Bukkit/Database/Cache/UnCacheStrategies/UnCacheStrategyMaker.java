@@ -1,5 +1,5 @@
 /*
- *   Copyright (C) 2022 GeorgH93
+ *   Copyright (C) 2025 GeorgH93
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -38,6 +38,7 @@ public class UnCacheStrategyMaker
 	 * @param config The config for the uncache strategy
 	 * @return The created uncache strategy
 	 */
+    @Deprecated
 	public static @NotNull BaseUnCacheStrategy make(final @NotNull FoliaWrappedJavaPlugin plugin, final @NotNull IPlayerCache cache, final @NotNull IUnCacheStrategyConfig config)
 	{
 		long delay = config.getUnCacheDelay() * 20L, interval = config.getUnCacheInterval() * 20L;
